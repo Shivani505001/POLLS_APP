@@ -1,0 +1,26 @@
+{%extends 'polls/base.html'%}
+{%block main_content%}
+    <h2>{{question.question_text}}</h2>
+    {%if error_message%}<p>{{error_message}}</p>{%endif%}
+    <form action = "{% url "polls:vote" question.id %}"  method="post">
+        {%csrf_token%} 
+        {%comment%}csrf_token is used because we make changes in form{%endcomment%}
+        {%for choice in question.choice_set.all%}
+            <input type='radio' name='choice' id='choice{{forloop.counter}}' value='{{choice.id}}'>
+            <label for='choice{{forloop.counter}}'>{{choice.choice_text}}</label><br>
+        {%endfor%}
+        {%comment%} forloop.counter is used to give unique id to each radio button.
+        value attribute is basically the default value of the radio button and it stores the id of the choice.
+        id attribute is used to link the label with the radio button
+        label is used to display the choice_text
+        {%endcomment%}
+        <input type='submit' value='vote'>
+        
+        
+        
+        {% comment %} <ul>
+        {%for choice in question.choice_set.all%}
+        <li>{{choice.choice_text}}</li>
+        {%endfor%}
+    </ul> {% endcomment %}
+{%endblock%}

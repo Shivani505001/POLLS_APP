@@ -1,0 +1,21 @@
+{%extends 'polls/base.html'%}
+{%block main_content%}
+    <ul>
+    {%if latest_questions%}
+    {%for question in latest_questions%}
+    {% comment %}
+    <li><a href = '/polls/{{question.id}}'><b>{{question.question_text}}</b></a></li>
+    the below method is most efficient method of writing url compared to this method.
+    In the above method we have to mention whole url and if we change the url then we have to change it in all the places.
+    {%endcomment%}
+    <li><a href = "{% url "polls:details" question.id%}"><b>{{question.question_text}}</b></a></li>
+    {% comment %}
+    polls:details - details view of poll app
+    {%endcomment%}
+    {%endfor%}
+    </ul>
+    {%else%}
+    <p>there r no more questions. pleae add few.</p>
+    {%endif%}
+{%endblock%}
+
